@@ -7,9 +7,14 @@ struct Config<'a> {
 
 impl<'a> Config<'a> {
     fn parce_args(args: &'a [String]) -> Self {
-        Self {
-            query: &args[2],
-            file_path: &args[1],
+        if args.len() != 3 {
+            eprintln!("There must be exatly 3 arguments.");
+            process::exit(2)
+        } else {
+            Self {
+                query: &args[2],
+                file_path: &args[1],
+            }
         }
     }
 
@@ -27,16 +32,8 @@ impl<'a> Config<'a> {
 fn main() {
     let arg = env::args().collect::<Vec<String>>();
 
-    if arg.len() != 3 {
-        eprintln!("You must provide 3 arguments.");
-    } else {
         let args = Config::parce_args(&arg);
-       
-
         println!("Searching for {} in file {}", args.query, args.file_path);
-
         let contents= args.read_file();
-
         dbg!("The file has the contents {}", contents);
-    }
 }
