@@ -1,3 +1,7 @@
-Rust:
-safe, fast, productive.
-Pick three.
+why do i do this
+i dont know
+coding in rust can be fun
+but only sometime
+Rust is productive
+other times it is not fun
+but that is the answer to why i do this

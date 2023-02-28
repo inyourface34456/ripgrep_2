@@ -28,14 +28,22 @@ impl<'a> Config<'a> {
 }
 
 
-pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+pub fn search<'a>(query: &str, contents: &'a str, case: Option<bool>) -> Vec<&'a str> {
     let mut result = Vec::new();
+    let case = case.unwrap_or(false);
 
-    for line in contents.lines() {
-        if line.contains(query) {
-            result.push(line);
+    if !case {
+        for line in contents.lines() {
+            if line.contains(query) {
+                result.push(line);
+            }
+        }
+    } else {
+        for line in contents.lines() {
+            if line.to_lowercase().contains(&query.to_lowercase()) {
+                result.push(line);
+            }
         }
     }
-
     result
 }
