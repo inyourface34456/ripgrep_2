@@ -1,6 +1,5 @@
 use std::{fs, process};
 
-
 pub struct Config<'a> {
     pub query: &'a str,
     pub file_path: &'a str,
@@ -25,4 +24,16 @@ impl<'a> Config<'a> {
             process::exit(2);
         })
     }
+
+    pub fn search(&self) -> Vec<String> {
+        let query = self.query.to_string();
+        let contents = self.read_file();
+        
+        for line in contents.lines() {
+            println!("{line}");
+        }
+
+        vec!["hello".to_string()]
+    }
+
 }
