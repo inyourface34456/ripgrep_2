@@ -2,3 +2,11 @@
 name = "ripgrep"
 version = "0.1.0"
 edition = "2021"
+
+[target.x86_64-pc-windows-msvc]
+linker = "lld"
+rustflags = [
+  "-Lnative=/workspaces/codespaces-blank/xwin/crt/lib/x86_64",
+  "-Lnative=/workspaces/codespaces-blank/xwin/sdk/lib/um/x86_64",
+  "-Lnative=/workspaces/codespaces-blank/xwin/sdk/lib/ucrt/x86_64"
+]
