@@ -20,8 +20,8 @@ impl<'a> Config<'a> {
     }
 
     pub fn read_file(&self) -> String {
-        fs::read_to_string(&self.file_path).unwrap_or_else(|err| {
-            eprintln!("An error has ocurred ({})", err);
+        fs::read_to_string(self.file_path).unwrap_or_else(|err| {
+            eprintln!("An error has ocurred ({err})");
             process::exit(2);
         })
     }
