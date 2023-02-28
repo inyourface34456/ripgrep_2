@@ -8,7 +8,7 @@ mod tests {
 
     #[test]
     fn one_result<'a>() {
-        let args = Config {query: "duct", file_path: "src/test.txt", case: true};
+        let args = Config {query: "duct", file_path: "src/test.txt", case: false};
         let s1 = args.read_file();
         let contents = s1.as_str();
 
@@ -17,7 +17,7 @@ mod tests {
 
     #[test]
     fn case_insesative() {
-        let args = Config {query: "rUsT", file_path: "src/test.txt", case: false};
+        let args = Config {query: "rUsT", file_path: "src/test.txt", case: true};
         let s1 = args.read_file();
         let contents = s1.as_str();
 
