@@ -1,7 +1,6 @@
 mod utils;
 use utils::*;
 use std::env;
-use clap::Parser;
 
 #[cfg(test)]
 mod tests {
@@ -9,20 +8,20 @@ mod tests {
 
     #[test]
     fn one_result<'a>() {
-        let args = Config {query: "duct", file_path: "src/test.txt"};
+        let args = Config {query: "duct", file_path: "src/test.txt", case: true};
         let s1 = args.read_file();
         let contents = s1.as_str();
 
-        assert_eq!(vec!["Rust is productive"], search(args.query, contents, None));
+        assert_eq!(vec!["Rust is productive"], search(args.query, contents, args.case));
     }
 
     #[test]
     fn case_insesative() {
-        let args = Config {query: "rUsT", file_path: "src/test.txt"};
+        let args = Config {query: "rUsT", file_path: "src/test.txt", case: false};
         let s1 = args.read_file();
         let contents = s1.as_str();
 
-        assert_eq!(vec!["coding in rust can be fun", "Rust is productive"], search(args.query, contents, Some(true)));
+        assert_eq!(vec!["coding in rust can be fun", "Rust is productive"], search(args.query, contents, args.case));
     }
 }
 
@@ -34,7 +33,7 @@ fn main() {
     let query = args.query;
     let contents = s1.as_str();
 
-    let results = search(query, contents, None);
+    let results = search(query, contents, args.case);
 
     for i in results {
         println!("{i}");

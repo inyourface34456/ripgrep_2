@@ -3,17 +3,23 @@ use std::{fs, process};
 pub struct Config<'a> {
     pub query: &'a str,
     pub file_path: &'a str,
+    pub case: bool,
 }
 
 impl<'a> Config<'a> {
     pub fn parce_args(args: &'a [String]) -> Self {
-        if args.len() != 3 {
-            eprintln!("There must be exatly 3 arguments.");
+        let mut case = true;
+        if args.len() <= 3 {
+            eprintln!("There must be greater then or equal to 3 arguments.");
             process::exit(2)
         } else {
+            if args.contains(&"-c".to_string()) {
+                case = false;
+            }
             Self {
                 query: &args[2],
                 file_path: &args[1],
+                case,
             }
         }
     }
@@ -28,9 +34,8 @@ impl<'a> Config<'a> {
 }
 
 
-pub fn search<'a>(query: &str, contents: &'a str, case: Option<bool>) -> Vec<&'a str> {
+pub fn search<'a>(query: &str, contents: &'a str, case: bool) -> Vec<&'a str> {
     let mut result = Vec::new();
-    let case = case.unwrap_or(false);
 
     if !case {
         for line in contents.lines() {
