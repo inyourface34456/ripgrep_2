@@ -25,15 +25,17 @@ impl<'a> Config<'a> {
         })
     }
 
-    pub fn search(&self) -> Vec<String> {
-        let query = self.query.to_string();
-        let contents = self.read_file();
-        
-        for line in contents.lines() {
-            println!("{line}");
-        }
+}
 
-        vec!["hello".to_string()]
+
+pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    let mut result = Vec::new();
+
+    for line in contents.lines() {
+        if line.contains(query) {
+            result.push(line);
+        }
     }
 
+    result
 }
