@@ -1,4 +1,5 @@
 use std::{fs, process};
+use regex::Regex;
 
 pub struct Config<'a> {
     pub query: &'a str,
@@ -6,20 +7,37 @@ pub struct Config<'a> {
     pub case: bool,
 }
 
+struct Flags {
+    case: bool,
+    regex: bool,
+}
+
+#[cfg(target_os = "linux")]
+const NUM_ARGS: usize = 3;
+
+#[cfg(target_os = "windows")]
+const NUM_ARGS: usize = 2;
+
 impl<'a> Config<'a> {
     pub fn parce_args(args: &'a [String]) -> Self {
-        let mut case = true;
-        if args.len() <= 3 {
+        let mut flag = Flags {case: false, regex: false};
+        if args.len() <= NUM_ARGS {
             eprintln!("There must be greater then or equal to 3 arguments.");
             process::exit(2)
         } else {
-            if args.contains(&"-c".to_string()) {
-                case = false;
+            for i in args.iter() {
+                let i = i.as_str();
+                match i {
+                    "-c" => flag.case = true,
+                    "-r" => flag.regex = true,
+                    _ => (),
+                }
             }
+            
             Self {
                 query: &args[2],
                 file_path: &args[1],
-                case,
+                case: flag.case,
             }
         }
     }

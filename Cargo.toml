@@ -10,3 +10,6 @@ rustflags = [
   "-Lnative=/workspaces/codespaces-blank/xwin/sdk/lib/um/x86_64",
   "-Lnative=/workspaces/codespaces-blank/xwin/sdk/lib/ucrt/x86_64"
 ]
+
+[dependencies]
+regex = "1.7.1"
