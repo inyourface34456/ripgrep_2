@@ -1,15 +1,14 @@
 [package]
 name = "ripgrep"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2021"
-
-[target.x86_64-pc-windows-msvc]
-linker = "lld"
-rustflags = [
-  "-Lnative=/workspaces/codespaces-blank/xwin/crt/lib/x86_64",
-  "-Lnative=/workspaces/codespaces-blank/xwin/sdk/lib/um/x86_64",
-  "-Lnative=/workspaces/codespaces-blank/xwin/sdk/lib/ucrt/x86_64"
-]
+authors = ["inyourface3445", "inyourface3445@gmail.com"]
+description = "a simple ripgrep tool that suports regular expressions"
+license = "MIT"
+license-file = "licence.txt"
+documentation = "ripgrep <filepath> <query> -c [enables case sensativity] -r [enables regex]"
+homepage = "google.com"
+repository = ""
 
 [dependencies]
 regex = "1.7.1"
