@@ -71,11 +71,11 @@ pub fn search<'a>(query: &str, contents: &'a str, case: bool) -> Vec<&'a str> {
     let mut result = Vec::new();
 
     if !case {
-        for line in contents.lines() {
+        contents.lines().for_each(|line| {
             if line.contains(query) {
                 result.push(line);
             }
-        }
+        });
     } else {
         for line in contents.lines() {
             if line.to_lowercase().contains(&query.to_lowercase()) {
