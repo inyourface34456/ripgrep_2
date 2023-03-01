@@ -67,21 +67,43 @@ impl<'a> Config<'a> {
 }
 
 
-pub fn search<'a>(query: &str, contents: &'a str, case: bool) -> Vec<&'a str> {
+pub fn search<'a>(query: &str, contents: &'a str, case: bool, regep: bool) -> Vec<&'a str> {
     let mut result = Vec::new();
+    let mut query_ = Regex::new("").unwrap();
 
+
+    if regep {
+        query_ = Regex::new(r"{query}").unwrap_or_else(|err| {
+            eprintln!("An error has ocurred ({})", err);
+            process::exit(1)
+        });
+    }
+        
     if !case {
         contents.lines().for_each(|line| {
-            if line.contains(query) {
-                result.push(line);
+            if regep {
+                if query_.is_match(line) {
+                    result.push(line);
+                }
+            } else {
+                if line.contains(query) {
+                    result.push(line);
+                }
             }
         });
+
     } else {
-        for line in contents.lines() {
-            if line.to_lowercase().contains(&query.to_lowercase()) {
-                result.push(line);
+        contents.lines().for_each(|line| {
+            if regep {
+                if query_.is_match(line) {
+                    result.push(line);
+                }
+            } else {
+                if line.to_lowercase().contains(&query.to_lowercase()) {
+                    result.push(line);
+                }
             }
-        }
+        });
     }
     result
 }

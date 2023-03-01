@@ -12,7 +12,7 @@ mod tests {
         let s1 = args.read_file();
         let contents = s1.as_str();
 
-        assert_eq!(vec!["Rust is productive"], search(args.query, contents, args.case));
+        assert_eq!(vec!["Rust is productive"], search(args.query, contents, args.case, args.regex));
     }
 
     #[test]
@@ -21,7 +21,7 @@ mod tests {
         let s1 = args.read_file();
         let contents = s1.as_str();
 
-        assert_eq!(vec!["coding in rust can be fun", "Rust is productive"], search(args.query, contents, args.case));
+        assert_eq!(vec!["coding in rust can be fun", "Rust is productive"], search(args.query, contents, args.case, args.regex));
     }
 }
 
@@ -33,7 +33,7 @@ fn main() {
     let query = args.query;
     let contents = s1.as_str();
 
-    let results = search(query, contents, args.case);
+    let results = search(query, contents, args.case, args.regex);
 
     for i in results {
         println!("{i}");
