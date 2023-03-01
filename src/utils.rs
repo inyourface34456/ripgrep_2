@@ -5,11 +5,33 @@ pub struct Config<'a> {
     pub query: &'a str,
     pub file_path: &'a str,
     pub case: bool,
+    pub regex: bool,
 }
 
 struct Flags {
     case: bool,
     regex: bool,
+}
+
+impl Flags {
+    fn cheak_args(args: &[String]) -> Self {
+        let mut case = false;
+        let mut regep = false;
+        
+        for i in args.iter() {
+            let i = i.as_str();
+            match i {
+                "-c" => case = true,
+                "-r" => regep = true,
+                _ => (),
+            }
+        }
+
+        Self {
+            case,
+            regex: regep,
+        }
+    }
 }
 
 #[cfg(target_os = "linux")]
@@ -20,24 +42,17 @@ const NUM_ARGS: usize = 2;
 
 impl<'a> Config<'a> {
     pub fn parce_args(args: &'a [String]) -> Self {
-        let mut flag = Flags {case: false, regex: false};
+        let flag = Flags::cheak_args(args);
         if args.len() <= NUM_ARGS {
             eprintln!("There must be greater then or equal to 3 arguments.");
             process::exit(2)
         } else {
-            for i in args.iter() {
-                let i = i.as_str();
-                match i {
-                    "-c" => flag.case = true,
-                    "-r" => flag.regex = true,
-                    _ => (),
-                }
-            }
             
             Self {
                 query: &args[2],
                 file_path: &args[1],
                 case: flag.case,
+                regex: flag.regex,
             }
         }
     }
