@@ -23,6 +23,15 @@ mod tests {
 
         assert_eq!(vec!["coding in rust can be fun", "Rust is productive"], search(args.query, contents, args.case, args.regex));
     }
+
+    #[test]
+    fn regep() {
+        let args = Config {query: r"(\d{4})-(\d{2})-(\d{2})", file_path: "src/test.txt", case: false, regex: true};
+        let s1 = args.read_file();
+        let contents = s1.as_str();
+
+        assert_eq!(vec!["2012-03-14", "2013-01-01", "2014-07-05"], search(args.query, contents, args.case, args.regex));
+    }
 }
 
 fn main() {

@@ -5,3 +5,6 @@ but only sometime
 Rust is productive
 other times it is not fun
 but that is the answer to why i do this
+2012-03-14
+2013-01-01
+2014-07-05

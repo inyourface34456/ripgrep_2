@@ -69,13 +69,15 @@ impl<'a> Config<'a> {
 
 pub fn search<'a>(query: &str, contents: &'a str, case: bool, regep: bool) -> Vec<&'a str> {
     let mut result = Vec::new();
-    let mut query_ = Regex::new("").unwrap();
+    let mut query_ = Regex::new("").unwrap_or_else(|_| {
+        process::exit(255)
+    });
 
 
     if regep {
-        query_ = Regex::new(r"{query}").unwrap_or_else(|err| {
-            eprintln!("An error has ocurred ({})", err);
-            process::exit(1)
+        query_ = Regex::new(query).unwrap_or_else(|err| {
+            println!("An error has ocurred ({})", err);
+            process::exit(17)
         });
     }
         
