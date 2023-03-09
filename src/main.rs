@@ -22,7 +22,7 @@ mod tests {
         let contents = s1.as_str();
 
         assert_eq!(vec!["coding in rust can be fun", "Rust is productive"], search(args.query, contents, args.case, args.regex));
-    }
+    } 
 
     #[test]
     fn regep() {
